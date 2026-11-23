@@ -33,8 +33,12 @@ A hero-led newspaper front page (1024×1024) for Monday, 23 November 2026:
 
 ## How it works
 
-`main.py` is Python standard library only (`os`, `shutil`, `pathlib`): it
-copies the shipped `entry.png` to `MAKEFUN_OUTPUT_DIR` (default `/output`).
+`main.py` is Python standard library only (`hashlib`, `os`, `shutil`,
+`struct`, `pathlib`): it validates the shipped `entry.png` (PNG signature,
+1024×1024 IHDR dimensions, under 1 MiB) and copies it to
+`MAKEFUN_OUTPUT_DIR` (default `/output`), then verifies the copy's SHA-256
+against the expected hash. A corrupt or swapped asset fails loudly instead
+of scoring silently.
 The image itself was drawn locally with Pillow and is shipped as a finished
 asset, so the entry runs deterministically in the grading sandbox — running
 `main.py` twice writes byte-identical output.
